@@ -1,6 +1,6 @@
 """Example of use of the simulator.
 
-To run, use 'python3 complete_example.py'.
+To run, use 'python3 example.py'.
 
 """
 
