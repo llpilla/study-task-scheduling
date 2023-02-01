@@ -46,7 +46,7 @@ $ ./test_other_schedulers.py
 
 3. Write the Highest Level First (HLF) and the largest number of successors priority policies (complete functions in [the schedulers file](simulator/schedulers.py)). Check if they pass the tests in [the unitary tests' file](unitary_tests/test_other_schedulers.py). Compare how they perform against each other for a few basic graphs.
 
-4. Run experiments with the new algorithms and compare their results to the ones achieved in Step 3. Choose one of the graphs, draw it, and analyze how different algorithms lead to different scheduling decisions.
+4. Run experiments with the new algorithms and compare their results to the ones achieved in Step 2. Choose one of the graphs, draw it, and analyze how different algorithms lead to different scheduling decisions.
 
 **Additional challenge**
 
