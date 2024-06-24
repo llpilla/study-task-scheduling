@@ -6,8 +6,10 @@ computes how the tasks would execute following their priorities.
 
 import heapq   # for heaps (it implements only min-heaps)
 
+import matplotlib.pyplot as plt
 
-def simulate(graph, num_resources, debug=False):
+
+def simulate(graph, num_resources, debug=False, scheduler=""):
     """Simulation engine.
 
     Parameters
@@ -18,6 +20,8 @@ def simulate(graph, num_resources, debug=False):
         Number of identical resources to simulate
     debug : bool [default = False]
         True if debug messages should be printed
+    scheduler :
+        the name of the scheduler used
 
     Returns
     -------
@@ -45,6 +49,20 @@ def simulate(graph, num_resources, debug=False):
     # - Creates the bootstrapping event in the event queue of the simulator
     # format of an event: (time, task id, resource id)
     events = [(time, None, None)]
+
+    #
+    fig, gnt = plt.subplots()
+    gnt.set_ylim(0, num_resources * 10)
+
+    gnt.set_xlabel('time')
+    gnt.set_ylabel('resources')
+
+    gnt.set_yticks([5 + i * 10 for i in range(num_resources + 1)])
+    gnt.set_yticklabels([i + 1 for i in range(num_resources + 1)])
+
+    gnt.grid(True)
+    colors = ['blue', 'green', 'red', 'yellow']
+    color_id = 0
 
     # Simulation runs while there are events to handle
     # Steps:
@@ -80,8 +98,14 @@ def simulate(graph, num_resources, debug=False):
             end_time = time + task.load
             # creates the event for the task's execution
             heapq.heappush(events, (end_time, task.id, res_id))
+            gnt.broken_barh([(time, task.load - 0.1)], (res_id * 10, 9), facecolors=colors[color_id % len(colors)])
+            color_id += 1
+
             if debug:
                 print(f'[t={time}]: START {task}, resource {res_id}')
+
+    plt.legend()
+    plt.savefig(f"scheduling_using_{scheduler}_with_{num_resources}_resources.png")
 
     # No more events
     print(f'* Total execution time (makespan) = {time}\n')
